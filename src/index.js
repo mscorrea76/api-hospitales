@@ -6,11 +6,9 @@ const app = express();
 app.use(express.json());
 
 // rutas
-app.use('/pacientes', require('./routes/pacientes.routes'));
-app.use('/medicos', require('./routes/medicos.routes'));
-app.use('/tratamientos', require('./routes/tratamientos.routes'));
+app.use('/api', require('./routes'));
 
-const PORT = process.env.PORT || 3000;
+const constants = require('./const/constants');
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en puerto ${PORT}`);

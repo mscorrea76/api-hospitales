@@ -50,3 +50,14 @@ En esta etapa, los endpoints simulan el comportamiento del sistema devolviendo m
 
 Autor
 Martín Sebastián Correa MP CPCIBA 886
+
+
+06/05/2026 TP 2 - Base de Datos
+
+Este proyecto utiliza Sequelize como ORM y SQLite como base de datos.
+
+Se incluyen migraciones y seeders para la creación y carga de datos iniciales.
+
+Comandos utilizados
+npx sequelize-cli db:migrate
+npx sequelize-cli db:seed:all
