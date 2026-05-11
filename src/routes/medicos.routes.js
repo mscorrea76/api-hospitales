@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/tratamientos.controller');
+const controller = require('../controllers/medicos.controller');
 
-// CRUD básico
 router.get('/', controller.getAll);
 router.get('/:id', controller.getById);
 router.post('/', controller.create);
+
+module.exports = router;
