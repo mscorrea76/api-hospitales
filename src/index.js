@@ -10,8 +10,6 @@ app.use('/api', require('./routes'));
 
 const constants = require('./consts/constants');
 
-
-
 app.listen(constants.PORT, () => {
     console.log(`Servidor corriendo en puerto ${constants.PORT}`);
 });

@@ -1,37 +1,82 @@
-const { Paciente } = require('../../models');
+const { Paciente, Tratamiento } = require('../../models');
 
+// 🔹 Obtener todos los pacientes
 exports.getAll = async (req, res) => {
     try {
         const pacientes = await Paciente.findAll();
-        res.json(pacientes);
+        return res.json(pacientes);
     } catch (error) {
-        res.status(500).json({ error: 'Error al obtener pacientes' });
+        return res.status(500).json({
+            error: 'Error al obtener pacientes'
+        });
     }
 };
 
+// 🔹 Obtener paciente por ID
 exports.getById = async (req, res) => {
     try {
-        const paciente = await Paciente.findByPk(req.params.id);
+        const { id } = req.params;
+
+        const paciente = await Paciente.findByPk(id);
 
         if (!paciente) {
-            return res.status(404).json({ error: 'Paciente no encontrado' });
+            return res.status(404).json({
+                error: 'Paciente no encontrado'
+            });
         }
 
-        res.json(paciente);
+        return res.json(paciente);
     } catch (error) {
-        res.status(500).json({ error: 'Error del servidor' });
+        return res.status(500).json({
+            error: 'Error al obtener el paciente'
+        });
     }
 };
 
+// 🔹 Crear paciente
 exports.create = async (req, res) => {
     try {
-        if (!req.body.nombre || !req.body.edad) {
-            return res.status(400).json({ error: 'Datos incompletos' });
+        const { nombre, edad } = req.body;
+
+        // Validación básica
+        if (!nombre || !edad) {
+            return res.status(400).json({
+                error: 'Nombre y edad son obligatorios'
+            });
         }
 
-        const nuevo = await Paciente.create(req.body);
-        res.status(201).json(nuevo);
+        const nuevoPaciente = await Paciente.create({
+            nombre,
+            edad
+        });
+
+        return res.status(201).json(nuevoPaciente);
     } catch (error) {
-        res.status(500).json({ error: 'Error al crear paciente' });
+        return res.status(500).json({
+            error: 'Error al crear paciente'
+        });
+    }
+};
+
+// 🔹 (EXTRA PRO) Obtener paciente con tratamientos
+exports.getWithTratamientos = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const paciente = await Paciente.findByPk(id, {
+            include: [Tratamiento]
+        });
+
+        if (!paciente) {
+            return res.status(404).json({
+                error: 'Paciente no encontrado'
+            });
+        }
+
+        return res.json(paciente);
+    } catch (error) {
+        return res.status(500).json({
+            error: 'Error al obtener paciente con tratamientos'
+        });
     }
 };
